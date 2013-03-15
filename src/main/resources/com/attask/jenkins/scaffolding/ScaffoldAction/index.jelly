@@ -28,7 +28,7 @@
 							<td class="pane">
 								<ul>
 									<j:forEach var="jobName" items="${scaffold.jobNames}">
-										<li><a href="${rootUrl}/job/${jobName}" target="_window">${jobName}</a></li>
+										<li><a href="${app.rootUrl}/job/${jobName}" target="_window">${jobName}</a></li>
 									</j:forEach>
 								</ul>
 							</td>
@@ -39,7 +39,7 @@
 							</td>
 							<td class="pane">
 								<a href="standUp?name=${scaffold.name}" class="standupButton">
-									<img src="${rootUrl}/images/24x24/gear.gif"/>
+									<img src="${app.rootUrl}/images/24x24/gear.gif"/>
 								</a>
 							</td>
 						</tr>
