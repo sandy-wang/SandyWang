@@ -6,7 +6,7 @@
             <form action="deleteJobs" method="POST">
                 <input type="hidden" name="scaffoldName" value="${request.getParameter('scaffoldName')}" />
                 <input type="hidden" name="suffix" value="${request.getParameter('suffix')}" />
-                <input type="submit" value="Delete"/>
+                <f:submit value="Delete"/>
             </form>
         </l:main-panel>
     </l:layout>

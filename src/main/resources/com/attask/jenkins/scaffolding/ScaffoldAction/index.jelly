@@ -47,7 +47,7 @@
 					<tr>
 						<td colspan="4">
 							<form method="get" action="create">
-								<input type="submit" value="+" />
+								<f:submit value="Add new scaffold"/>
 							</form>
 						</td>
 					</tr>
