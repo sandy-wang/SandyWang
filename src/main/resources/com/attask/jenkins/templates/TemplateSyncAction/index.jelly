@@ -10,7 +10,9 @@
 						<div style="color: red;">Warning! You have builds running. Syncing now can cause weird things to happen!</div>
 					</j:if>
 					<span>Are you sure you want to sync?</span>
-					<input type="submit" value="Sync"/>
+					<p>
+						<f:submit value="Sync"/>
+					</p>
 				</div>
 			</form>
 		</l:main-panel>
