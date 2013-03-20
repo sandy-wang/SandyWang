@@ -1,4 +1,4 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
 	<l:layout norefresh="true" title="Scaffolding">
 		<st:include it="${app}" page="sidepanel.jelly" />
 		<l:main-panel>
@@ -10,8 +10,9 @@
 
 			<div id="Templating-Scaffolding">
 				<j:set var="scaffold" value="${it.allScaffolding.get(request.getParameter('name'))}"/>
-                <h1>Scaffold ${scaffold.name}</h1>
+                <h1>Scaffold "${scaffold.name}"</h1>
                 <div>
+                	<h2>Variables</h2>
                     <ul>
                     <j:forEach var="varName" items="${scaffold.variables}">
 
@@ -22,7 +23,15 @@
                     </ul>
                 </div>
                 <div>
-                    <h2>Child Jobs</h2>
+                	<h2>Jobs</h2>
+                	<ul>
+                		<j:forEach var="job" items="${scaffold.jobNames}">
+							<li><a href="${rootUrl}/job/${job}">${job}</a></li>
+                		</j:forEach>
+                	</ul>
+                </div>
+                <div>
+                    <h2>Scaffold standup child jobs</h2>
                     <ul>
                         <j:forEach var="childJobSuffix" items="${scaffold.childJobs.keySet()}">
                             <h3>${childJobSuffix}</h3>
@@ -48,19 +57,24 @@
                         </j:forEach>
                     </ul>
                 </div>
-                <form method="get" action="standUp">
-                    <input type="hidden" name="name" value="${scaffold.name}" />
-                    <input type="submit" value="Stand up this scaffold"/>
-                </form>
-                <form method="get" action="create">
-                    <input type="hidden" name="scaffoldName" value="${scaffold.name}" />
-                    <input type="submit" value="Edit this scaffold"/>
-                </form>
-                <form method="post" action="deleteScaffold">
-                    <input type="hidden" name="name" value="${scaffold.name}" />
-                    <input type="submit" value="Delete this scaffold"/>
-                </form>
-				<!--TODO pretty up the page-->
+                <p>
+					<form method="get" action="standUp">
+						<input type="hidden" name="name" value="${scaffold.name}" />
+						<f:submit value="Standup this scaffold"/>
+					</form>
+                </p>
+                <p>
+					<form method="get" action="create">
+						<input type="hidden" name="scaffoldName" value="${scaffold.name}" />
+						<f:submit value="Edit this scaffold"/>
+					</form>
+                </p>
+                <p>
+					<form method="post" action="deleteScaffold">
+						<input type="hidden" name="name" value="${scaffold.name}" />
+						<f:submit value="Delete this scaffold"/>
+					</form>
+                </p>
 			</div>
 		</l:main-panel>
 	</l:layout>
