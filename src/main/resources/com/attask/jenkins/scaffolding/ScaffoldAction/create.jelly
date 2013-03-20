@@ -19,17 +19,17 @@
 						<input name="name" value="${scaffold.name}"/>
 					</div>
 					<div id="jobNames">
-						<h2>Jobs</h2>
-						<j:forEach var="jobName" items="${app.getTopLevelItemNames()}">
+						<h2>Template jobs</h2>
+						<j:forEach var="jobName" items="${it.findTemplateJobs()}">
 							<div>
-                                <j:choose>
-                                    <j:when test="${scaffold.jobNames.contains(jobName)}">
-                                        <input type="checkbox" checked="true" name="jobNames" value="${jobName}"/>
-                                    </j:when>
-                                    <j:otherwise>
-                                        <input type="checkbox" name="jobNames" value="${jobName}"/>
-                                    </j:otherwise>
-                                </j:choose>
+								<j:choose>
+									<j:when test="${scaffold.jobNames.contains(jobName)}">
+										<input type="checkbox" checked="true" name="jobNames" value="${jobName}"/>
+									</j:when>
+									<j:otherwise>
+										<input type="checkbox" name="jobNames" value="${jobName}"/>
+									</j:otherwise>
+								</j:choose>
 								<span>${jobName}</span>
 							</div>
 						</j:forEach>
