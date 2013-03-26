@@ -37,11 +37,7 @@ public class TemplateBuildWrapper extends BuildWrapper implements Syncable {
 
 	public void sync() throws IOException {
 		AbstractProject templateProject = null;
-		try {
-			templateProject = Project.findNearest(templateName);
-		} catch(NullPointerException ignore) {
-			//unfortunately, on jenkins load we get null pointer exceptions here
-		}
+		templateProject = Project.findNearest(templateName);
 		if(templateProject != null) {
 			Set<AbstractProject> implementingProjects = getImplementers();
 			for (AbstractProject implementingProject : implementingProjects) {
