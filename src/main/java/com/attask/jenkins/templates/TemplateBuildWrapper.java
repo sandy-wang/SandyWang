@@ -36,8 +36,7 @@ public class TemplateBuildWrapper extends BuildWrapper implements Syncable {
 	}
 
 	public void sync() throws IOException {
-		AbstractProject templateProject = null;
-		templateProject = Project.findNearest(templateName);
+		AbstractProject templateProject = Project.findNearest(templateName);
 		if(templateProject != null) {
 			Set<AbstractProject> implementingProjects = getImplementers();
 			for (AbstractProject implementingProject : implementingProjects) {
