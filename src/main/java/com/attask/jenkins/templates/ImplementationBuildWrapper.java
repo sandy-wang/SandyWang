@@ -91,10 +91,9 @@ public class ImplementationBuildWrapper extends BuildWrapper implements Syncable
 
 		String oldDescription = implementation.getDescription();
 		boolean oldDisabled = implementation.isDisabled();
-        Map<TriggerDescriptor, Trigger> oldTriggers = implementation.getTriggers();
 
         XmlFile implementationXmlFile = replaceConfig(template, implementation, propertiesMap);
-		refreshAndSave(template, implementationBuildWrapper, implementationXmlFile, oldDescription, oldDisabled, oldTriggers);
+		refreshAndSave(template, implementationBuildWrapper, implementationXmlFile, oldDescription, oldDisabled);
 	}
 
 	private static Map<Pattern, String> getPropertiesMap(AbstractProject template, AbstractProject implementation, ImplementationBuildWrapper implementationBuildWrapper) {
@@ -131,7 +130,7 @@ public class ImplementationBuildWrapper extends BuildWrapper implements Syncable
 		return implementationXmlFile;
 	}
 
-	private static void refreshAndSave(AbstractProject template, ImplementationBuildWrapper implementationBuildWrapper, XmlFile implementationXmlFile, String oldDescription, boolean oldDisabled, Map<TriggerDescriptor, Trigger> oldTriggers) throws IOException {
+	private static void refreshAndSave(AbstractProject template, ImplementationBuildWrapper implementationBuildWrapper, XmlFile implementationXmlFile, String oldDescription, boolean oldDisabled) throws IOException {
 		TopLevelItem item = (TopLevelItem) Items.load(Jenkins.getInstance(), implementationXmlFile.getFile().getParentFile());
 		if(item instanceof AbstractProject) {
 			AbstractProject newImplementation = (AbstractProject) item;
@@ -139,11 +138,6 @@ public class ImplementationBuildWrapper extends BuildWrapper implements Syncable
 			//Use reflection to prevent it from auto-saving
 			ReflectionUtils.setField(newImplementation, "description", oldDescription);
 			ReflectionUtils.setField(newImplementation, "disabled", oldDisabled);
-            Vector triggers = ReflectionUtils.getField(Vector.class, newImplementation, "triggers");
-            triggers.clear();
-            for (Trigger trigger : oldTriggers.values()) {
-                triggers.add(trigger);
-            }
 
 			DescribableList<BuildWrapper, Descriptor<BuildWrapper>> implementationBuildWrappers = ((BuildableItemWithBuildWrappers) newImplementation).getBuildWrappersList();
 			CopyOnWriteList data = ReflectionUtils.getField(CopyOnWriteList.class, implementationBuildWrappers, "data");
