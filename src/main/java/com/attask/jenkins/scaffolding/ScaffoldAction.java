@@ -6,7 +6,13 @@ import com.attask.jenkins.templates.ImplementationBuildWrapper;
 import com.attask.jenkins.templates.TemplateBuildWrapper;
 import com.google.common.collect.ImmutableSet;
 import hudson.Extension;
-import hudson.model.*;
+import hudson.model.AbstractProject;
+import hudson.model.BuildableItemWithBuildWrappers;
+import hudson.model.Descriptor;
+import hudson.model.Hudson;
+import hudson.model.Project;
+import hudson.model.RootAction;
+import hudson.model.TopLevelItem;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
 import jenkins.model.Jenkins;
@@ -19,7 +25,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -106,23 +118,23 @@ public class ScaffoldAction implements RootAction {
     }
 
     public void doDeleteScaffold(StaplerRequest request, StaplerResponse response) throws IOException, ServletException {
-        String name = request.getParameter("name");
-        scaffoldCache.remove(name);
-        Scaffold.delete(name);
+//        String name = request.getParameter("name");
+//        scaffoldCache.remove(name);
+//        Scaffold.delete(name);
 
         String rootUrl = Jenkins.getInstance().getRootUrl() == null ? "/" : Jenkins.getInstance().getRootUrl();
         response.sendRedirect(rootUrl + getUrlName());
     }
 
     public void doDeleteJobs(StaplerRequest request, StaplerResponse response) throws IOException, ServletException, InterruptedException {
-        String suffix = request.getParameter("suffix");
-        String scaffoldName = request.getParameter("scaffoldName");
-        Scaffold scaffold = scaffoldCache.get(scaffoldName);
-        List<String> jobs = scaffold.getChildJobs().get(suffix);
-        for (String jobName : jobs) {
-            AbstractProject job = Project.findNearest(jobName);
-            job.delete();
-        }
+//        String suffix = request.getParameter("suffix");
+//        String scaffoldName = request.getParameter("scaffoldName");
+//        Scaffold scaffold = scaffoldCache.get(scaffoldName);
+//        List<String> jobs = scaffold.getChildJobs().get(suffix);
+//        for (String jobName : jobs) {
+//            AbstractProject job = Project.findNearest(jobName);
+//            job.delete();
+//        }
         String rootUrl = Jenkins.getInstance().getRootUrl() == null ? "/" : Jenkins.getInstance().getRootUrl();
         response.sendRedirect(rootUrl + getUrlName());
     }

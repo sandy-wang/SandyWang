@@ -3,11 +3,7 @@
     <l:layout norefresh="true" title="Scaffolding">
         <st:include it="${app}" page="sidepanel.jelly" />
         <l:main-panel>
-            <form action="deleteJobs" method="POST">
-                <input type="hidden" name="scaffoldName" value="${request.getParameter('scaffoldName')}" />
-                <input type="hidden" name="suffix" value="${request.getParameter('suffix')}" />
-                <f:submit value="Delete"/>
-            </form>
+        	This is not the page you're looking for. Turn back, get away, this bricks things.
         </l:main-panel>
     </l:layout>
 </j:jelly>
