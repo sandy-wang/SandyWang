@@ -8,7 +8,10 @@
                 <form method="post" action="standUpScaffold">
                     <input type="hidden" value="${scaffold.name}" name="scaffoldName" />
                     <div>
-                        <label for="jobNameAppend">Append to Job Name</label>
+                    	<p>The job qualifier will replace "template" inside the template job, or be appended to the template job name.</p>
+                    	<p>e.g.: project-template-junit with job qualifier "1.0" would become: project-1.0-junit</p>
+                    	<p>e.g.: project-junit with job qualifier "1.0" would become: project-junit-1.0</p>
+                        <label for="jobNameAppend">Job qualifier</label>
                         <input type="text" name="jobNameAppend"/>
                     </div>
                     <div>

@@ -156,7 +156,14 @@ public class ScaffoldAction implements RootAction {
         List<String> jobNames = scaffold.getJobNames();
         for (String jobName : jobNames) {
             AbstractProject jobToClone = Project.findNearest(jobName);
-            String newName = jobName + jobNameAppend;
+			String newName;
+			if (jobName.contains("template")) {
+				// If the job contains "template", we want to replace said word with the append, by convention
+				// e.g.: project-template-junit with append name "1.0" would become: project-1.0-junit
+				newName = jobName.replace("template", jobNameAppend);
+			} else {
+				newName = jobName + jobNameAppend;
+			}
             cloneJob(jobToClone, newName, variableValues);
 
             scaffold.addChildJob(jobNameAppend, newName);
