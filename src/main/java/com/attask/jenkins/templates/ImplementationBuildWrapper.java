@@ -10,8 +10,6 @@ import hudson.XmlFile;
 import hudson.model.*;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
 import hudson.util.CopyOnWriteList;
 import hudson.util.DescribableList;
 import hudson.util.FormValidation;
@@ -26,7 +24,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.regex.Pattern;
 
 /**
@@ -89,11 +86,10 @@ public class ImplementationBuildWrapper extends BuildWrapper implements Syncable
 
 		Map<Pattern, String> propertiesMap = getPropertiesMap(template, implementation, implementationBuildWrapper);
 
-		String oldDescription = implementation.getDescription();
 		boolean oldDisabled = implementation.isDisabled();
 
         XmlFile implementationXmlFile = replaceConfig(template, implementation, propertiesMap);
-		refreshAndSave(template, implementationBuildWrapper, implementationXmlFile, oldDescription, oldDisabled);
+		refreshAndSave(template, implementationBuildWrapper, implementationXmlFile, oldDisabled);
 	}
 
 	private static Map<Pattern, String> getPropertiesMap(AbstractProject template, AbstractProject implementation, ImplementationBuildWrapper implementationBuildWrapper) {
@@ -130,13 +126,12 @@ public class ImplementationBuildWrapper extends BuildWrapper implements Syncable
 		return implementationXmlFile;
 	}
 
-	private static void refreshAndSave(AbstractProject template, ImplementationBuildWrapper implementationBuildWrapper, XmlFile implementationXmlFile, String oldDescription, boolean oldDisabled) throws IOException {
+	private static void refreshAndSave(AbstractProject template, ImplementationBuildWrapper implementationBuildWrapper, XmlFile implementationXmlFile, boolean oldDisabled) throws IOException {
 		TopLevelItem item = (TopLevelItem) Items.load(Jenkins.getInstance(), implementationXmlFile.getFile().getParentFile());
 		if(item instanceof AbstractProject) {
 			AbstractProject newImplementation = (AbstractProject) item;
 
 			//Use reflection to prevent it from auto-saving
-			ReflectionUtils.setField(newImplementation, "description", oldDescription);
 			ReflectionUtils.setField(newImplementation, "disabled", oldDisabled);
 
 			DescribableList<BuildWrapper, Descriptor<BuildWrapper>> implementationBuildWrappers = ((BuildableItemWithBuildWrappers) newImplementation).getBuildWrappersList();
